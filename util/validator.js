@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken');
-const { secretKey } = require('../config/secretKey');
+const jwt = require("jsonwebtoken");
+const { secretKey } = require("../config/secretKey");
 module.exports.signUpValidator = (
   username,
   password,
@@ -54,9 +54,6 @@ module.exports.loginValidator = (username, password) => {
   };
 };
 
-module.exports.postValidator = (post,user) =>{
- 
-   return post.username === user.username
-   
-
-}
+module.exports.postValidator = (post, user) => {
+  return post.username === user.username;
+};

@@ -5,8 +5,7 @@ const userModel = require('../Model/userModel')
 const uerModel =require('../Model/userModel') 
 const postModel = require('../Model/postModel')
 
-module.exports = async ({req}) =>{
-
+module.exports = async (req) =>{
     if(!req.headers.authorization)
     {
         throw new Error('Authorization header must be present')

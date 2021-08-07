@@ -1,25 +1,21 @@
-const jwt = require("jsonwebtoken");
 const postModel = require("../../Model/postModel");
-const { secretKey } = require("../../config/secretKey");
 const checkAuth = require("../../util/checkAuth");
 const { postValidator } = require("../../util/validator");
+const  {filter} = require('lodash')
 module.exports = {
   Query: {
     async getPosts() {
       // Let's find all Post using mongoose model
       try {
         const posts = await postModel.find();
-        console.log("posts", posts);
         return posts;
       } catch (err) {
-        console.log("err", err);
         throw new Error(err);
       }
     },
     async getPost(_, { postId }) {
       try {
         const post = await postModel.findOne({ _id: postId });
-        console.log("post getting", post);
         return post;
       } catch (err) {
         throw new Error("post not found");
@@ -30,7 +26,6 @@ module.exports = {
     async createPost(_, { body }, context) {
       try {
         const user = await checkAuth(context.req);
-        console.log("user", user);
         let post = new postModel({
           body,
           username: user.username,
@@ -39,12 +34,10 @@ module.exports = {
         post = await post.save();
         return post;
       } catch (err) {
-        console.log("error --> ", err);
         throw new Error(err);
       }
     },
     async deletePost(_, { postId }, context) {
-      
       // 1ST AUTHENTICATE
       const user = await checkAuth(context.req);
 
@@ -66,5 +59,33 @@ module.exports = {
       }
       return "deleted successfully";
     },
+    async commentPost(_, { postId, body }, { req }) {
+      // Is user logged In
+      const user = await checkAuth(req);
+      // Is post Found
+      let post = await postModel.findOne({ _id: postId });
+      if (!post) throw new Error("post not found");
+      post.comments.unshift({
+        body: body,
+        username: user.username,
+        createdAt: new Date().toLocaleString(),
+      });
+      post = await post.save(); 
+      return post; 
+    },
+    async deleteComment(_,{postId,commentId},{req}) {
+      
+      await checkAuth(req)
+      let post = await postModel.findOne({ _id: postId });
+   
+post.comments = filter(post.comments, function({_id}) { 
+     return _id.toString()!==commentId 
+    });
+      await post.save()
+      return "deleted successfully"
+
+
+
+    }
   },
 };

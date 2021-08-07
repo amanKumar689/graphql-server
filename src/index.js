@@ -11,7 +11,7 @@ const resolvers =require('../Graphql/Resolvers/index')
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context:(req)=>({req})
+  context:({req})=>({req})
 });
 
 // * Mongoose connection with MongoDB
