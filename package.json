@@ -1,0 +1,19 @@
+{
+  "name": "graphql_react_app_social",
+  "version": "1.0.0",
+  "description": "I am gonna create app includes some functionality of facebook",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "graphqlServer": "nodemon src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^3.1.2",
+    "bcrypt": "^5.0.1",
+    "graphql": "^15.5.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.13.5"
+  }
+}
