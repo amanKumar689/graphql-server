@@ -1,1 +1,0 @@
-module.exports.secretKey = 'SOME SPECIAL POWER'
